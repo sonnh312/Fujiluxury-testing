@@ -1,0 +1,13 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Fuji Luxury Test Suite">
+    <listeners>
+        <listener class-name="com.fujiluxury.test.utils.ExtentReportListener"/>
+    </listeners>
+
+    <test name="Fuji Luxury Website Tests">
+        <classes>
+            <class name="com.fujiluxury.test.tests.HomePageTests"/>
+            <!-- Thêm các test class khác nếu cần -->
+        </classes>
+    </test>
+</suite>
