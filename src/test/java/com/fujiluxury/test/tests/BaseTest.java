@@ -22,7 +22,7 @@ public class BaseTest {
                 result.getMethod().getDescription()
         );
 
-        ExtentReportManager.logStep("Khởi tạo trình duyệt Chrome");
+        ExtentReportManager.logStep("Init Browser Chrome");
 
         // Setup driver
         ChromeOptions options = new ChromeOptions();
@@ -38,10 +38,10 @@ public class BaseTest {
     public void tearDown(ITestResult result) {
         // Screenshot if test failed
         if (result.getStatus() == ITestResult.FAILURE) {
-            ExtentReportManager.captureAndAttachScreenshot(driver, "Test thất bại - Màn hình cuối cùng");
+            ExtentReportManager.captureAndAttachScreenshot(driver, "Test failed - Screenshot and capture");
         }
 
-        ExtentReportManager.logStep("Đóng trình duyệt");
+        ExtentReportManager.logStep("Close Browser");
 
         if (driver != null) {
             driver.quit();
