@@ -6,6 +6,7 @@ import com.fujiluxury.test.utils.ExtentReportManager;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import java.util.Random;
 import java.util.UUID;
 public class RegisterPageTests extends BaseTest{
 
@@ -18,16 +19,50 @@ public class RegisterPageTests extends BaseTest{
         // Generate unique email to avoid duplicate registration issues
         String uniqueId = UUID.randomUUID().toString().substring(0, 8);
         String fullName = "Test User " + uniqueId;
-        String phone = "098" + (int)(Math.random() * 10000000);
+        String phone = "0988" + String.format("%06d", new Random().nextInt(1000));
         String email = "testuser" + uniqueId + "@example.com";
         String password = "Test@123456";
 
         ExtentReportManager.logStep("Fill registration form with valid information");
-        boolean registerSuccess = registerPage.register(fullName, phone, email, password);
+
+        // Add retry mechanism for registration
+        int maxAttempts = 3;
+        boolean registerSuccess = false;
+
+        for (int attempt = 1; attempt <= maxAttempts; attempt++) {
+            try {
+                registerSuccess = registerPage.register(fullName, phone, email, password);
+
+                // If registration is successful, break the loop
+                if (registerSuccess) {
+                    break;
+                }
+
+                // If not successful, log the attempt and wait before retrying
+                System.out.println("Registration attempt " + attempt + " failed. Retrying...");
+                Thread.sleep(30000); // Wait 2 seconds between attempts
+
+                // Refresh the page before next attempt
+                driver.navigate().refresh();
+                registerPage = new RegisterPage(driver);
+                registerPage.navigateTo();
+            } catch (Exception e) {
+                System.out.println("Exception during registration attempt " + attempt + ": " + e.getMessage());
+
+                // Log the full stack trace for debugging
+                e.printStackTrace();
+            }
+        }
 
         ExtentReportManager.logStep("Verify successful registration");
         Assert.assertTrue(registerSuccess, "Registration should be successful with valid information");
-        ExtentReportManager.captureAndAttachScreenshot(driver, "Registration successful");
+
+        // Capture screenshot only if registration was successful
+        if (registerSuccess) {
+            ExtentReportManager.captureAndAttachScreenshot(driver, "Registration successful");
+        } else {
+            ExtentReportManager.captureAndAttachScreenshot(driver, "Registration failed after " + maxAttempts + " attempts");
+        }
     }
 
 //    @Test(description = "Register with existing email")

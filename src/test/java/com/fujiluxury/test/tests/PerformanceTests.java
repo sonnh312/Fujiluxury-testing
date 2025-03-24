@@ -23,7 +23,7 @@ public class PerformanceTests extends BaseTest{
 
     private Map<String, Long> pageLoadTimes;
     private static final int CONCURRENT_USERS = 10; // Simulate 10 concurrent users
-    private static final int MAX_RESPONSE_TIME_MS = 7000; // 5 seconds max acceptable response time
+    private static final int MAX_RESPONSE_TIME_MS = 6000;// 5 seconds max acceptable response time
 
     @BeforeMethod
     @Override

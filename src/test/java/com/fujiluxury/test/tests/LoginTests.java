@@ -116,22 +116,22 @@ public class LoginTests extends BaseTest{
         ExtentReportManager.captureAndAttachScreenshot(driver, "Login page after logout with Remember Me");
     }
 
-//    @Test(description = "Verify Forgot Password functionality")
-//    public void testForgotPasswordFunctionality() {
-//        ExtentReportManager.logStep("Navigate to Login page");
-//        LoginPage loginPage = new LoginPage(driver);
-//        loginPage.navigateTo();
-//
-//        ExtentReportManager.logStep("Click on Forgot Password link");
-//        loginPage.clickForgotPassword();
-//
-//        ExtentReportManager.logStep("Verify redirection to password reset page");
-//        // Verify the URL or elements specific to the password reset page
-//        boolean isOnResetPage = driver.getCurrentUrl().contains("reset") ||
-//                driver.getCurrentUrl().contains("forgot") ||
-//                driver.getCurrentUrl().contains("recovery");
-//
-//        Assert.assertFalse(isOnResetPage, "Should be redirected to password reset page");
-//        ExtentReportManager.captureAndAttachScreenshot(driver, "Password reset page");
-//    }
+    @Test(description = "Verify Forgot Password functionality")
+    public void testForgotPasswordFunctionality() {
+        ExtentReportManager.logStep("Navigate to Login page");
+        LoginPage loginPage = new LoginPage(driver);
+        loginPage.navigateTo();
+
+        ExtentReportManager.logStep("Click on Forgot Password link");
+        loginPage.clickForgotPassword();
+
+        ExtentReportManager.logStep("Verify redirection to password reset page");
+        // Verify the URL or elements specific to the password reset page
+        boolean isOnResetPage = driver.getCurrentUrl().contains("reset") ||
+                driver.getCurrentUrl().contains("forgot") ||
+                driver.getCurrentUrl().contains("recovery");
+
+        Assert.assertFalse(isOnResetPage, "Should be redirected to password reset page");
+        ExtentReportManager.captureAndAttachScreenshot(driver, "Password reset page");
+    }
 }

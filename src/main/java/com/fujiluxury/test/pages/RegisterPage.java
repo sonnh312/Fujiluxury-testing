@@ -1,12 +1,14 @@
 package com.fujiluxury.test.pages;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class RegisterPage extends BasePage{
 
-    private static final String URL = "https://fujiluxury.vn/thanh-vien/dang-ky-tai-khoan-dai-ly.html";
+    private static final String URL = "https://fujiluxury.vn/thanh-vien/dang-ky-dai-ly.html";
 
     // Locators
     private final By fullNameInput = By.xpath("//input[@id='rFullName']");
@@ -116,6 +118,66 @@ public class RegisterPage extends BasePage{
 
         // Return false if error message is displayed (registration failed)
         return !isErrorMessageDisplayed();
+    }
+
+    public void handleCaptcha() {
+        try {
+            WebElement captchaFrame = wait.until(ExpectedConditions.presenceOfElementLocated(
+                    By.xpath("//iframe[@title='reCAPTCHA']")
+            ));
+
+            driver.switchTo().frame(captchaFrame);
+
+            WebElement captchaCheckbox = wait.until(ExpectedConditions.elementToBeClickable(
+                    By.xpath("//span[@role='checkbox']")
+            ));
+
+            captchaCheckbox.click();
+
+            driver.switchTo().defaultContent();
+        } catch (Exception e) {
+            System.out.println("Captcha handling failed: " + e.getMessage());
+        }
+    }
+
+    public void bypassCaptchaWithJS() {
+        try {
+            // Tìm checkbox reCAPTCHA
+            WebElement captchaCheckbox = wait.until(ExpectedConditions.presenceOfElementLocated(
+                    By.xpath("//span[@role='checkbox']")
+            ));
+
+            // Sử dụng JavaScript để click checkbox
+            JavascriptExecutor js = (JavascriptExecutor) driver;
+            js.executeScript("arguments[0].click();", captchaCheckbox);
+        } catch (Exception e) {
+            System.out.println("Bỏ qua Captcha bằng JS thất bại: " + e.getMessage());
+        }
+    }
+
+    public boolean handleCaptchaWithRetry(int maxAttempts) {
+        for (int attempt = 1; attempt <= maxAttempts; attempt++) {
+            try {
+                WebElement captchaCheckbox = wait.until(ExpectedConditions.elementToBeClickable(
+                        By.xpath("//span[@role='checkbox']")
+                ));
+
+                captchaCheckbox.click();
+
+                Thread.sleep(1000);
+
+                return true;
+            } catch (Exception e) {
+                System.out.println("Lần thử " + attempt + " xử lý Captcha thất bại: " + e.getMessage());
+
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException ex) {
+                    Thread.currentThread().interrupt();
+                }
+            }
+        }
+        return false;
     }
 
 }
