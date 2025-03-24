@@ -7,7 +7,10 @@
     <test name="Fuji Luxury Website Tests">
         <classes>
             <class name="com.fujiluxury.test.tests.HomePageTests"/>
-            <!-- Thêm các test class khác nếu cần -->
+            <class name="com.fujiluxury.test.tests.SearchFunctionalityTests"/>
+            <class name="com.fujiluxury.test.tests.LoginTests"/>
+            <class name="com.fujiluxury.test.tests.RegisterPageTests"/>
+            <class name="com.fujiluxury.test.tests.PerformanceTests"/>
         </classes>
     </test>
 </suite>

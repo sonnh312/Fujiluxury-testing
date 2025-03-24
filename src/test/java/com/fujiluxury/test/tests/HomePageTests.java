@@ -19,7 +19,6 @@ public class HomePageTests extends BaseTest{
 
         ExtentReportManager.logStep("Verify page title");
         Assert.assertFalse(driver.getTitle().contains("Fujilux"), "Page title should contain 'Fujilux'");
-
         ExtentReportManager.captureAndAttachScreenshot(driver, "Homepage loaded");
     }
 
@@ -72,7 +71,7 @@ public class HomePageTests extends BaseTest{
         ExtentReportManager.captureAndAttachScreenshot(driver, "Search box displayed");
 
         ExtentReportManager.logStep("Perform search with keyword 'massage'");
-        String searchTerm = "massage";
+        String searchTerm = "FUJILUX S88 SONIC WAVE";
         SearchResultsPage searchResultsPage = homePage.searchForProduct(searchTerm);
 
         ExtentReportManager.logStep("Verify search results page");
@@ -92,48 +91,48 @@ public class HomePageTests extends BaseTest{
         ExtentReportManager.captureAndAttachScreenshot(driver, "Search results");
     }
 
-//    @Test(description = "Verify product categories display correctly")
-//    public void testProductCategoriesDisplay() {
-//        HomePage homePage = new HomePage(driver);
-//        homePage.navigateTo();
-//
-//        // Verify product categories are displayed
-//        Assert.assertTrue(homePage.areProductCategoriesDisplayed(),
-//                "Product categories should be displayed");
-//
-//        // Verify expected number of categories
-//        int categoryCount = homePage.getProductCategoriesCount();
-//        Assert.assertTrue(categoryCount >= 5,
-//                "There should be at least 5 menu categories, but found: " + categoryCount);
-//
-//        // Verify specific category names
-//        String[] categoryNames = homePage.getMenuCategoryNames();
-//        boolean hasShowroom = false;
-//        boolean hasTinTuc = false;
-//
-//        for (String name : categoryNames) {
-//            if (name.contains("SHOWROOM")) hasShowroom = true;
-//            if (name.contains("TIN TỨC")) hasTinTuc = true;
-//        }
-//
-//        Assert.assertTrue(hasShowroom, "Categories should include 'SHOWROOM'");
-//        Assert.assertTrue(hasTinTuc, "Categories should include 'TIN TỨC'");
-//    }
+    @Test(description = "Verify product categories display correctly")
+    public void testProductCategoriesDisplay() {
+        HomePage homePage = new HomePage(driver);
+        homePage.navigateTo();
+
+        // Verify product categories are displayed
+        Assert.assertTrue(homePage.areProductCategoriesDisplayed(),
+                "Product categories should be displayed");
+
+        // Verify expected number of categories
+        int categoryCount = homePage.getProductCategoriesCount();
+        Assert.assertFalse(categoryCount >= 5,
+                "There should be at least 5 menu categories, but found: " + categoryCount);
+
+        // Verify specific category names
+        String[] categoryNames = homePage.getMenuCategoryNames();
+        boolean hasShowroom = false;
+        boolean hasTinTuc = false;
+
+        for (String name : categoryNames) {
+            if (name.contains("SHOWROOM")) hasShowroom = true;
+            if (name.contains("TIN TỨC")) hasTinTuc = true;
+        }
+
+        Assert.assertFalse(hasShowroom, "Categories should include 'SHOWROOM'");
+        Assert.assertFalse(hasTinTuc, "Categories should include 'TIN TỨC'");
+    }
 
 
-//    @Test(description = "Verify contact information is displayed")
-//    public void testContactInfoDisplay() {
-//        HomePage homePage = new HomePage(driver);
-//        homePage.navigateTo();
-//
-//        // Verify hotline number is displayed
-//        Assert.assertTrue(homePage.isHotlineDisplayed(), "Hotline number should be displayed");
-//
-//        // Verify hotline number is correct
-//        String hotlineText = homePage.getHotlineText();
-//        Assert.assertTrue(hotlineText.contains("19008128"),
-//                "Hotline should contain '19008128' but found: " + hotlineText);
-//    }
+    @Test(description = "Verify contact information is displayed")
+    public void testContactInfoDisplay() {
+        HomePage homePage = new HomePage(driver);
+        homePage.navigateTo();
+
+        // Verify hotline number is displayed
+        Assert.assertTrue(homePage.isHotlineDisplayed(), "Hotline number should be displayed");
+
+        // Verify hotline number is correct
+        String hotlineText = homePage.getHotlineText();
+        Assert.assertTrue(hotlineText.contains("19008128"),
+                "Hotline should contain '19008128' but found: " + hotlineText);
+    }
 
     @Test(description = "Verify login button is displayed")
     public void testLoginButtonDisplay() {

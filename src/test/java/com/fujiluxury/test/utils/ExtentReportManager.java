@@ -32,8 +32,8 @@ public class ExtentReportManager {
             new File(reportPath).getParentFile().mkdirs();
 
             ExtentSparkReporter htmlReporter = new ExtentSparkReporter(reportPath);
-            htmlReporter.config().setDocumentTitle("Fuji Luxury - Báo cáo tự động");
-            htmlReporter.config().setReportName("Báo cáo kiểm thử web Fuji Luxury");
+            htmlReporter.config().setDocumentTitle("Fuji Luxury - Auto Reporting");
+            htmlReporter.config().setReportName("Reporting website Fuji Luxury");
             htmlReporter.config().setTheme(Theme.DARK);
             htmlReporter.config().setEncoding("utf-8");
             htmlReporter.config().setTimeStampFormat("dd/MM/yyyy hh:mm:ss a");
@@ -41,8 +41,8 @@ public class ExtentReportManager {
             extent = new ExtentReports();
             extent.attachReporter(htmlReporter);
             extent.setSystemInfo("Website", "Fuji Luxury");
-            extent.setSystemInfo("Trình duyệt", "Chrome");
-            extent.setSystemInfo("Hệ điều hành", System.getProperty("os.name"));
+            extent.setSystemInfo("Browser", "Chrome");
+            extent.setSystemInfo("OS", System.getProperty("os.name"));
         }
 
         return extent;
